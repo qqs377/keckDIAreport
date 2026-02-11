@@ -6,9 +6,15 @@ let sampleGroups = [];
 let fileInput, fileName, fileInfo, sampleNameInput, addSampleBtn, loadDefaultsBtn;
 let samplesList, clientName, processBtn, progressBar, progressFill, statusMessage;
 
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM Elements
+// Wait for both DOM and external scripts to load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
+
+function initializeApp() {
+    // Get DOM Elements with error checking
     fileInput = document.getElementById('fileInput');
     fileName = document.getElementById('fileName');
     fileInfo = document.getElementById('fileInfo');
@@ -22,6 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
     progressFill = document.getElementById('progressFill');
     statusMessage = document.getElementById('statusMessage');
 
+    // Check if all elements are found
+    if (!fileInput || !fileName || !addSampleBtn) {
+        console.error('Error: Could not find required DOM elements');
+        return;
+    }
+
     // Event Listeners
     fileInput.addEventListener('change', handleFileUpload);
     addSampleBtn.addEventListener('click', addSampleGroup);
@@ -34,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     renderSamplesList();
     updateProcessButton();
-});
+}
 
 // File Upload Handler
 function handleFileUpload(event) {
