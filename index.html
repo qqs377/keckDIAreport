@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proteomics Data Processor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Proteomics Data Processor</h1>
+            <p>Upload your TSV file and filter by sample groups</p>
+        </header>
+
+        <main>
+            <!-- File Upload Section -->
+            <section class="upload-section">
+                <div class="file-input-wrapper">
+                    <label for="fileInput" class="file-label">
+                        <span class="file-icon">📁</span>
+                        <span class="file-text">Choose TSV File</span>
+                    </label>
+                    <input type="file" id="fileInput" accept=".tsv,.txt" />
+                </div>
+                <div id="fileInfo" class="file-info"></div>
+            </section>
+
+            <!-- Sample Groups Section -->
+            <section class="samples-section" id="samplesSection" style="display: none;">
+                <h2>Sample Groups</h2>
+                <div class="samples-container" id="samplesContainer">
+                    <div class="sample-item">
+                        <input type="text" class="sample-input" placeholder="e.g., CTRL_Saline" value="CTRL_Saline">
+                        <button class="remove-btn" onclick="removeSample(this)">×</button>
+                    </div>
+                    <div class="sample-item">
+                        <input type="text" class="sample-input" placeholder="e.g., CTRL_Cocaine" value="CTRL_Cocaine">
+                        <button class="remove-btn" onclick="removeSample(this)">×</button>
+                    </div>
+                    <div class="sample-item">
+                        <input type="text" class="sample-input" placeholder="e.g., ABX_Saline" value="ABX_Saline">
+                        <button class="remove-btn" onclick="removeSample(this)">×</button>
+                    </div>
+                    <div class="sample-item">
+                        <input type="text" class="sample-input" placeholder="e.g., ABX_Cocaine" value="ABX_Cocaine">
+                        <button class="remove-btn" onclick="removeSample(this)">×</button>
+                    </div>
+                </div>
+                <button class="add-btn" onclick="addSample()">+ Add Sample Group</button>
+            </section>
+
+            <!-- Client Name Section -->
+            <section class="client-section" id="clientSection" style="display: none;">
+                <h2>Report Settings</h2>
+                <div class="input-group">
+                    <label for="clientName">Client Last Name (optional):</label>
+                    <input type="text" id="clientName" placeholder="e.g., Wang">
+                </div>
+            </section>
+
+            <!-- Process Button -->
+            <section class="action-section" id="actionSection" style="display: none;">
+                <button class="process-btn" id="processBtn" onclick="processData()">
+                    Generate Excel Report
+                </button>
+                <div id="status" class="status-message"></div>
+            </section>
+
+            <!-- Progress Section -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText">Processing...</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built for proteomics data analysis • Export to Excel format</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
