@@ -3,84 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIA Proteomics Data Processor</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Proteomics Data Processor</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>DIA Proteomics Data Processor</h1>
-            <p>Upload your TSV file and filter by sample groups</p>
+            <h1>Proteomics Data Processor</h1>
+            <p>Upload TSV file and specify sample groups to generate Excel reports</p>
         </header>
 
         <main>
             <!-- File Upload Section -->
             <section class="upload-section">
+                <h2>1. Upload Data File</h2>
                 <div class="file-input-wrapper">
-                    <label for="fileInput" class="file-label">
-                        <span class="file-icon">📁</span>
-                        <span class="file-text">Choose TSV File</span>
-                    </label>
                     <input type="file" id="fileInput" accept=".tsv,.txt" />
+                    <label for="fileInput" class="file-label">Choose TSV File</label>
+                    <span id="fileName" class="file-name">No file selected</span>
                 </div>
                 <div id="fileInfo" class="file-info"></div>
             </section>
 
             <!-- Sample Groups Section -->
-            <section class="samples-section" id="samplesSection" style="display: none;">
-                <h2>Sample Groups</h2>
-                <div class="samples-container" id="samplesContainer">
-                    <div class="sample-item">
-                        <input type="text" class="sample-input" placeholder="e.g., CTRL_Saline" value="CTRL_Saline">
-                        <button class="remove-btn" onclick="removeSample(this)">×</button>
+            <section class="samples-section">
+                <h2>2. Define Sample Groups</h2>
+                <div class="samples-controls">
+                    <div class="input-group">
+                        <input type="text" id="sampleNameInput" placeholder="e.g., CTRL_Saline" />
+                        <button id="addSampleBtn" class="btn btn-primary">Add Sample Group</button>
                     </div>
-                    <div class="sample-item">
-                        <input type="text" class="sample-input" placeholder="e.g., CTRL_Cocaine" value="CTRL_Cocaine">
-                        <button class="remove-btn" onclick="removeSample(this)">×</button>
-                    </div>
-                    <div class="sample-item">
-                        <input type="text" class="sample-input" placeholder="e.g., ABX_Saline" value="ABX_Saline">
-                        <button class="remove-btn" onclick="removeSample(this)">×</button>
-                    </div>
-                    <div class="sample-item">
-                        <input type="text" class="sample-input" placeholder="e.g., ABX_Cocaine" value="ABX_Cocaine">
-                        <button class="remove-btn" onclick="removeSample(this)">×</button>
-                    </div>
+                    <button id="loadDefaultsBtn" class="btn btn-secondary">Load Default Groups</button>
                 </div>
-                <button class="add-btn" onclick="addSample()">+ Add Sample Group</button>
+                
+                <div id="samplesList" class="samples-list"></div>
             </section>
 
-            <!-- Client Name Section -->
-            <section class="client-section" id="clientSection" style="display: none;">
-                <h2>Report Settings</h2>
+            <!-- Client Info Section -->
+            <section class="client-section">
+                <h2>3. Report Details</h2>
                 <div class="input-group">
-                    <label for="clientName">Client Last Name (optional):</label>
-                    <input type="text" id="clientName" placeholder="e.g., Wang">
+                    <label for="clientName">Client/Project Name:</label>
+                    <input type="text" id="clientName" placeholder="e.g., Wang" value="Wang" />
                 </div>
             </section>
 
-            <!-- Process Button -->
-            <section class="action-section" id="actionSection" style="display: none;">
-                <button class="process-btn" id="processBtn" onclick="processData()">
+            <!-- Process Section -->
+            <section class="process-section">
+                <button id="processBtn" class="btn btn-success btn-large" disabled>
                     Generate Excel Report
                 </button>
-                <div id="status" class="status-message"></div>
-            </section>
-
-            <!-- Progress Section -->
-            <section class="progress-section" id="progressSection" style="display: none;">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                <div id="progressBar" class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
                 </div>
-                <p id="progressText">Processing...</p>
+                <div id="statusMessage" class="status-message"></div>
             </section>
         </main>
 
         <footer>
-            <p>Built for proteomics data analysis • Export to Excel format</p>
+            <p>Created for proteomics data analysis • Generates multi-sheet Excel workbooks</p>
         </footer>
     </div>
 
+    <!-- Include SheetJS library for Excel generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
 </body>
