@@ -2,27 +2,38 @@
 let uploadedData = null;
 let sampleGroups = [];
 
-// DOM Elements
-const fileInput = document.getElementById('fileInput');
-const fileName = document.getElementById('fileName');
-const fileInfo = document.getElementById('fileInfo');
-const sampleNameInput = document.getElementById('sampleNameInput');
-const addSampleBtn = document.getElementById('addSampleBtn');
-const loadDefaultsBtn = document.getElementById('loadDefaultsBtn');
-const samplesList = document.getElementById('samplesList');
-const clientName = document.getElementById('clientName');
-const processBtn = document.getElementById('processBtn');
-const progressBar = document.getElementById('progressBar');
-const progressFill = document.getElementById('progressFill');
-const statusMessage = document.getElementById('statusMessage');
+// DOM Elements (will be initialized after DOM loads)
+let fileInput, fileName, fileInfo, sampleNameInput, addSampleBtn, loadDefaultsBtn;
+let samplesList, clientName, processBtn, progressBar, progressFill, statusMessage;
 
-// Event Listeners
-fileInput.addEventListener('change', handleFileUpload);
-addSampleBtn.addEventListener('click', addSampleGroup);
-loadDefaultsBtn.addEventListener('click', loadDefaultGroups);
-processBtn.addEventListener('click', processData);
-sampleNameInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addSampleGroup();
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Get DOM Elements
+    fileInput = document.getElementById('fileInput');
+    fileName = document.getElementById('fileName');
+    fileInfo = document.getElementById('fileInfo');
+    sampleNameInput = document.getElementById('sampleNameInput');
+    addSampleBtn = document.getElementById('addSampleBtn');
+    loadDefaultsBtn = document.getElementById('loadDefaultsBtn');
+    samplesList = document.getElementById('samplesList');
+    clientName = document.getElementById('clientName');
+    processBtn = document.getElementById('processBtn');
+    progressBar = document.getElementById('progressBar');
+    progressFill = document.getElementById('progressFill');
+    statusMessage = document.getElementById('statusMessage');
+
+    // Event Listeners
+    fileInput.addEventListener('change', handleFileUpload);
+    addSampleBtn.addEventListener('click', addSampleGroup);
+    loadDefaultsBtn.addEventListener('click', loadDefaultGroups);
+    processBtn.addEventListener('click', processData);
+    sampleNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addSampleGroup();
+    });
+
+    // Initialize
+    renderSamplesList();
+    updateProcessButton();
 });
 
 // File Upload Handler
@@ -262,7 +273,3 @@ function showStatus(message, type = 'info') {
         }, 5000);
     }
 }
-
-// Initialize
-renderSamplesList();
-updateProcessButton();
